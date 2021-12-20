@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Watchlist";
+}
+
+@if(Model!=null)
+    {
+        <h3>@ViewData["Title"]</h3>
+        <!-- Begin Table Search V2 -->
+        <div class="table-search-v2 panel panel-grey margin-bottom-50">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>User Image</th>
+                            <th class="hidden-sm">About</th>
+                            <th>Director</th>
+                            <th>Genre</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (dynamic movie in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img class="img-responsive" src="@movie.Image" alt="">
+                                </td>
+                                <td class="td-width">
+                                    <h3>@movie.Title</h3>
+                                    <p>@movie.Plot</p>
+                                    <small class="hex">Joined February 28, 2014</small>
+                                </td>
+                                <td>
+                                    <p>@movie.Directors</p>
+                                </td>
+                                <td>
+                                    <span>@movie.Genres</span> 
+                                </td>
+                                <td>
+                                    <ul class="list-inline table-buttons">
+                                        <li><button type="button" class="btn-u btn-u-sm btn-u-dark"><i class="fa fa-trash-o"></i></button></li>
+                                        <li><button type="button" class="btn-u btn-u-sm btn-u-dark"><i class="fa fa-edit"></i></button></li>
+                                        <li><button type="button" class="btn-u btn-u-sm btn-u-dark"><i class="fa fa-print"></i></button></li>
+                                    </ul>
+                                </td>
+                            </tr>    
+                        }
+                    
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+            <!-- End Table Search V2 -->
+
+} else
+{
+    <h4>The list is empty...</h4>
+}

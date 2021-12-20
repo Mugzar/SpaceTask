@@ -18,63 +18,59 @@ namespace MovieAPI.Controllers
             _dbContext = dbContext;
             _logger = logger;
         }
-
         [HttpGet(Name = "GetWatchlist")]
-        public string Get(int id)
+        public ContentResult Get(int id)
         {
             try{
                 List<Movie> movies = new List<Movie>();
                 var result = _dbContext.WatchLists.Where(w => w.UserRefId == id).Include(w => w.WatchMovies).ThenInclude(m => m.Movie)
                     .FirstOrDefault();
+                if (result == null) throw new Exception();
                 foreach (var wm in result.WatchMovies)
                 {
                     movies.Add(wm.Movie);
                 }
-                return JsonConvert.SerializeObject(movies, Formatting.Indented);
+                return Content(JsonConvert.SerializeObject(movies), "application/json");
+
             }
             catch(Exception ex)
             {
-                return "No data";
+                return Content("No data");
             }
         }
 
         //POST api/<WatchlistController>
         [HttpPost(Name = "AddMovie")]
-        public string Post(int userId, string movieId)
+        public ContentResult Post([FromBody] Dto dto)
         {
             try
             {
-
                 //check if exist
                 MovieProcessor proc = new MovieProcessor();
-                IMDBmovieResponse movieToAdd = proc.GetInfo(movieId);
-                var movie = new Movie()
-                {
-                    Title = movieToAdd.Title,
-                    Description = movieToAdd.Plot,
-                    Director = movieToAdd.Directors,
-                    Genre = movieToAdd.Genres,
-                    Poster = movieToAdd.Image,
-                    Rating = movieToAdd.ImDbRating,
-                    IMDBtitleId= movieId
-                };
-                _dbContext.Movies.Add(movie);
+                IMDBmovieResponse movieToAdd = proc.GetInfo(dto.MovieId);
+                _dbContext.Movies.Add((Movie)movieToAdd);
                 _dbContext.SaveChanges();
-                WatchList wl = _dbContext.WatchLists.FirstOrDefault(wl => wl.UserRefId == userId);
-                Movie movieItem = _dbContext.Movies.FirstOrDefault(m => m.IMDBtitleId == movieId);
+                WatchList wl = _dbContext.WatchLists.FirstOrDefault(wl => wl.UserRefId == dto.UserId);
+                Movie movieItem = _dbContext.Movies.FirstOrDefault(m => m.IMDBtitleId == dto.MovieId);
                 wl.WatchMovies.Add(new WatchMovie
                 {
                     WatchListId = wl.WatchListID,
                     MovieId = movieItem.MovieID
                 });
                 _dbContext.SaveChanges();
-                return JsonConvert.SerializeObject(movieToAdd, Formatting.Indented);
+                return Content(JsonConvert.SerializeObject(movieToAdd, Formatting.Indented),"application/json");
             }
             catch(Exception ex)
             {
-                return "Error during fetching the data";
+                return Content("Error during fetching the data"); 
             }
             
         }
+    }
+
+    public class Dto
+    {
+        public int UserId { get; set; }
+        public string MovieId { get; set; }
     }
 }

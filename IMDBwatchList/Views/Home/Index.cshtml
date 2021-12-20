@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Simple watchlist for IMDB Movies </p>
+    <form asp-controller="Home" asp-action="Index">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="input-group">
+                <input type="text" name="searchString" class="form-control" placeholder="Search movies ..."/>&nbsp;
+                <span class="input-group-btn">
+                    <button class="btn-u" type="submit"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+    </form>    
+</div>
+
+<br />
+<br />
+<ul>
+    @if(Model!=null)
+    {
+        @foreach (dynamic movie in Model)
+        {
+            <!-- Bordered Funny Boxes -->
+                    <div class="funny-boxes funny-boxes-left-orange">
+                        <div class="row">
+                            <div class="col-md-2 funny-boxes-img">
+                                <img class="img-responsive" src="@movie.Image" alt="">
+                                <ul class="list-unstyled">
+                                   <li><i class="fa fa-video-camera"></i> @movie.Directors</li>
+                                   <li><i class="fa fa-info"></i> @movie.Genres</li>
+                                </ul>
+                                <form asp-controller="Home" asp-action="AddToWatchlist" method="post">
+                                    <input type="hidden" name="userId" value="@ViewData["userId"]"/>
+                                    <input type="hidden" name="movieId" value="@movie.IMDBtitleId"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn-u" type="submit"><i class="fa fa-plus"></i> add to watchlist</button>
+                                    </span>
+                                </form>
+                                
+                                
+                            </div>
+                            <div class="col-md-10">
+                                <h2>@movie.Title</h2>
+                                <h4>IMDB @movie.ImDbRating</h4>
+                                <p>@movie.Plot</p>
+                            </div>
+                        </div>                            
+                    </div>
+                    <!-- End Bordered Funny Boxes -->
+        }    
+    }
+    
+</ul><br />

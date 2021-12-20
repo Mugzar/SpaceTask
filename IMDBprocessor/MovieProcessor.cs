@@ -27,6 +27,10 @@ namespace IMDBprocessor
             string response = SendRequest($"{Host}/SearchMovie/{ApiKey}/{expression}");
             IMDBsearchResponse searchResponse =
                 JsonConvert.DeserializeObject<IMDBsearchResponse>(response);
+            if (searchResponse.Results == null)
+            {
+                return movies;
+            }    
             foreach (ResultItem m in searchResponse.Results)
             {
                 movies.Add(GetInfo(m.Id));

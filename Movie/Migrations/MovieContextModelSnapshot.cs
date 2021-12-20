@@ -30,15 +30,11 @@ namespace MovieAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieID"), 1L, 1);
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Directors")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Director")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Genre")
+                    b.Property<string>("Genres")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -46,11 +42,15 @@ namespace MovieAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Poster")
+                    b.Property<double?>("ImDbRating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Rating")
-                        .HasColumnType("float");
+                    b.Property<string>("Plot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -64,19 +64,21 @@ namespace MovieAPI.Migrations
                         new
                         {
                             MovieID = 1,
-                            Description = "short description about the movie",
-                            Director = "Some director",
-                            Genre = "ACtion",
-                            IMDBtitleId = "qwe123",
-                            Title = "Movie1"
+                            Directors = "Lana Wachowski, Lilly Wachowski",
+                            Genres = "Action, Sci-Fi",
+                            IMDBtitleId = "tt0133093",
+                            ImDbRating = 8.6999999999999993,
+                            Image = "https://imdb-api.com/images/original/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_Ratio0.6791_AL_.jpg",
+                            Plot = "Thomas A. Anderson is a man living two lives. By day he is an average computer programmer and by night a hacker known as Neo. Neo has always questioned his reality, but the truth is far beyond his imagination. Neo finds himself targeted by the police when he is contacted by Morpheus, a legendary computer hacker branded a terrorist by the government. As a rebel against the machines, Neo must confront the agents: super-powerful computer programs devoted to stopping Neo and the entire human rebellion.",
+                            Title = "The Matrix"
                         },
                         new
                         {
                             MovieID = 2,
-                            Description = "short description about the movie",
-                            Director = "Wachewski brothers",
-                            Genre = "ACtion",
+                            Directors = "Wachewski brothers",
+                            Genres = "ACtion",
                             IMDBtitleId = "asd321",
+                            Plot = "short description about the movie",
                             Title = "Matrix"
                         });
                 });
@@ -150,7 +152,9 @@ namespace MovieAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastDateOffered")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2021, 9, 19, 18, 45, 24, 640, DateTimeKind.Local).AddTicks(6560));
 
                     b.HasKey("WatchListId", "MovieId");
 
