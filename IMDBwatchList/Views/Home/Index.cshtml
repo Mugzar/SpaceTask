@@ -33,7 +33,7 @@
                                    <li><i class="fa fa-video-camera"></i> @movie.Directors</li>
                                    <li><i class="fa fa-info"></i> @movie.Genres</li>
                                 </ul>
-                                <form asp-controller="Home" asp-action="AddToWatchlist" method="post">
+                                <form asp-controller="Home" asp-action="Index" method="post">
                                     <input type="hidden" name="userId" value="@ViewData["userId"]"/>
                                     <input type="hidden" name="movieId" value="@movie.IMDBtitleId"/>
                                     <span class="input-group-btn">

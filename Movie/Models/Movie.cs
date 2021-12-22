@@ -1,4 +1,5 @@
-﻿using IMDBprocessor;
+﻿using BaseProcessor;
+using IMDBprocessor;
 using Newtonsoft.Json;
 
 namespace MovieAPI.Models
@@ -17,17 +18,17 @@ namespace MovieAPI.Models
 		[JsonIgnore]
 		public virtual ICollection<WatchMovie> WatchMovies { get; set; }=new List<WatchMovie>();
 
-        public static explicit operator Movie(IMDBmovieResponse imdbObj)
+        public static explicit operator Movie(ProviderResponse serviceObj)
         {
             Movie movieObj = new Movie()
             {
-                Title = imdbObj.Title,
-                Plot = imdbObj.Plot,
-                Directors = imdbObj.Directors,
-                Genres = imdbObj.Genres,
-                Image = imdbObj.Image,
-                ImDbRating = imdbObj.ImDbRating,
-                IMDBtitleId = imdbObj.Id
+                Title = serviceObj.Name,
+                Plot = serviceObj.Description,
+                Directors = serviceObj.Author,
+                Genres = serviceObj.Genre,
+                Image = serviceObj.Image,
+                ImDbRating = serviceObj.Rating,
+                IMDBtitleId = serviceObj.Id
             };
             return movieObj;
         } 

@@ -37,17 +37,16 @@ namespace IMDBwatchList.Controllers
         }
 
         [HttpPost]
-        public async void AddToWatchlist(int userId,string movieId)
+        public async Task<IActionResult> AddToWatchlist(int userId,string movieId)
         {
             var client = _httpClientFactory.CreateClient("imdbAPI");
             var json = JsonConvert.SerializeObject(new { 
-                Value = userId.ToString()
+                userId = userId,
+                movieId =movieId
             });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync($"api/Watchlist?movieId={movieId}",data);
-
-            //var jsonString = await response.Content.ReadAsStringAsync();
-            //List<Movie> movies = JsonConvert.DeserializeObject<List<Movie>>(jsonString);
+            HttpResponseMessage response = await client.PostAsync($"api/Watchlist",data);
+            return this.Index(); 
         }
         public async Task<IActionResult> Privacy()
         {

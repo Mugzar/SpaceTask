@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaseProcessor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,5 @@ namespace IMDBprocessor
         public double? ImDbRating { get; set; }
         public string Image { get; set; }
         public string Plot { get; set; }
-    } 
+    }
 }

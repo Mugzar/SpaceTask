@@ -3,6 +3,7 @@ using IMDBprocessor;
 using System.Text.Json;
 using Newtonsoft.Json;
 using MovieAPI.Models;
+using BaseProcessor;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MovieAPI.Controllers
@@ -13,22 +14,22 @@ namespace MovieAPI.Controllers
     {
 
         private readonly ILogger<MoviesController> _logger;
+        private readonly IMovieServiceManager _movieServiceManager;
 
-        public MoviesController(ILogger<MoviesController> logger)
+        public MoviesController(IMovieServiceManager movieServiceManager, ILogger<MoviesController> logger)
         {
             _logger = logger;
+            _movieServiceManager = movieServiceManager;
         }
         
 
         // GET api/<MovieController>/title
-        [HttpGet(Name = "GetMovieList")]
+        [HttpGet(Name = "Movies")]
         public ContentResult Get(string title)
         {
-
             List<Movie> movieList = new List<Movie>();
-            MovieProcessor proc = new MovieProcessor();
-            var response = proc.GetAll(title);
-            foreach(IMDBmovieResponse movieItem in response)
+            var providerResponseList = _movieServiceManager.getListOfMedia(title);
+            foreach(ProviderResponse movieItem in providerResponseList)
             {
                 movieList.Add((Movie)movieItem);
             }

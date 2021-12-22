@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIMDBapi", "TestIMDBapi\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BE203340-9253-4A9C-B7D6-3A3D185E5ABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDBwatchList", "IMDBwatchList\IMDBwatchList.csproj", "{913B111B-BFB5-44C3-889B-60FCEC69FB4B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +37,6 @@ Global
 		{7F94AE1F-FD48-4032-8343-A9A3CBDFD8C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F94AE1F-FD48-4032-8343-A9A3CBDFD8C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F94AE1F-FD48-4032-8343-A9A3CBDFD8C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{913B111B-BFB5-44C3-889B-60FCEC69FB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{913B111B-BFB5-44C3-889B-60FCEC69FB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{913B111B-BFB5-44C3-889B-60FCEC69FB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{913B111B-BFB5-44C3-889B-60FCEC69FB4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

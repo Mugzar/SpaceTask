@@ -1,3 +1,4 @@
+using BaseProcessor;
 using IMDBprocessor;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,15 @@ namespace MovieAPI.Controllers
     {
         private readonly ILogger<WatchlistController> _logger;
         private readonly MovieContext _dbContext;
+        private readonly IMovieServiceManager _movieServiceManager;
 
-        public WatchlistController(MovieContext dbContext, ILogger<WatchlistController> logger)
+        public WatchlistController(MovieContext dbContext, ILogger<WatchlistController> logger, IMovieServiceManager movieServiceManager)
         {
             _dbContext = dbContext;
             _logger = logger;
+            _movieServiceManager = movieServiceManager;
         }
-        [HttpGet(Name = "GetWatchlist")]
+        [HttpGet(Name = "Watchlist")]
         public ContentResult Get(int id)
         {
             try{
@@ -45,9 +48,9 @@ namespace MovieAPI.Controllers
         {
             try
             {
+
                 //check if exist
-                MovieProcessor proc = new MovieProcessor();
-                IMDBmovieResponse movieToAdd = proc.GetInfo(dto.MovieId);
+                ProviderResponse movieToAdd = _movieServiceManager.getMediaInfo(dto.MovieId);
                 _dbContext.Movies.Add((Movie)movieToAdd);
                 _dbContext.SaveChanges();
                 WatchList wl = _dbContext.WatchLists.FirstOrDefault(wl => wl.UserRefId == dto.UserId);
