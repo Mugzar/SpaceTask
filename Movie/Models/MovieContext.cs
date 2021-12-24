@@ -19,8 +19,8 @@ namespace MovieAPI.Models
                         .HasOne<WatchList>(u => u.WatchList)
                         .WithOne(w => w.User)
                         .HasForeignKey<WatchList>(w => w.UserRefId);
-            modelBuilder.Entity<User>().HasData(new User { UserID = 1, UserName = "Morpheus"});
-            modelBuilder.Entity<User>().HasData(new User { UserID = 2, UserName = "Neo" });
+            modelBuilder.Entity<User>().HasData(new User { UserID = 1, UserName = "Morpheus", Email="akizhan@gmail.com"});
+            modelBuilder.Entity<User>().HasData(new User { UserID = 2, UserName = "Neo", Email="akizhan@gmail.com" });
 
             modelBuilder.Entity<WatchList>().HasData(new WatchList { WatchListID = 1, UserRefId = 1 });
             modelBuilder.Entity<WatchList>().HasData(new WatchList { WatchListID = 2, UserRefId = 2 });
